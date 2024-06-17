@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 const cesiumSource = 'node_modules/cesium/Build/Cesium'
-const cesiumBaseUrl = '/cesium/'
+const cesiumBaseUrl = 'cesiumStatic'
 
 export default defineConfig({
   plugins: [
