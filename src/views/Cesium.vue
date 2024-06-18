@@ -1,28 +1,33 @@
 <template>
   <div id="cesiumContainer" class="w-full h-screen absolute"></div>
-  <div class="fixed top-4 left-4 z-10 flex flex-col space-y-2">
-    <div class="flex space-x-2">
+  <div class="fixed top-4 left-4 z-10 space-y-2 w-screen">
+    <div class="lg:flex lg:items-center">
       <input
         v-model="address"
         type="text"
         placeholder="Enter address"
         class="p-2 border border-gray-300 rounded"
       />
-      <MainButton label="Search" :icon="MagnifyingGlassIcon" @click="searchGeocode" />
-      <MainButton label="Add waypoint" :icon="PlusIcon" @click="addWaypoint" />
+      <div class="mt-2 z-10 w-screen space-x-2 lg:mt-0 lg:ml-2">
+        <MainButton label="Search" :icon="MagnifyingGlassIcon" @click="searchGeocode" />
+        <MainButton label="Add waypoint" :icon="PlusIcon" @click="addWaypoint" />
+      </div>
     </div>
-  </div>
-  <div class="bg-gray-900 fixed text-white ml-4 mt-20 w-1/4 rounded shadow-lg">
-    <h3 class="text-lg font-semibold w-full flex justify-center py-3">Waypoints on Map</h3>
-    <div v-for="(waypoint, index) in waypoints" :key="index">
-      <Card
-        :name="waypoint.displayName"
-        :lat="waypoint.lat"
-        :lng="waypoint.lng"
-        :alt="waypoint.altPoint - waypoint.altBottom"
-        @deleteWaypoint="removeWaypoint(waypoint.id)"
-        @updateAltWaypoint="updateAltWaypoint(waypoint.id, $event)"
-      />
+    <div
+      v-if="waypoints[0]"
+      class="bg-gray-900 fixed text-white mt-32 lg:mt-20 w-4/5 flex flex-col lg:w-1/4 rounded shadow-lg"
+    >
+      <h3 class="text-lg font-semibold w-full flex justify-center py-3">Waypoints on Map</h3>
+      <div v-for="(waypoint, index) in waypoints" :key="index">
+        <Card
+          :name="waypoint.displayName"
+          :lat="waypoint.lat"
+          :lng="waypoint.lng"
+          :alt="waypoint.altPoint - waypoint.altBottom"
+          @deleteWaypoint="removeWaypoint(waypoint.id)"
+          @updateAltWaypoint="updateAltWaypoint(waypoint.id, $event)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -55,7 +60,17 @@ const waypoints = ref<Waypoint[]>([])
 async function initializeViewer(): Promise<void> {
   viewer = new Cesium.Viewer('cesiumContainer', {
     terrainProvider: await Cesium.createWorldTerrainAsync(),
-    geocoder: false
+    geocoder: false,
+    baseLayerPicker: false,
+    fullscreenButton: false,
+    homeButton: true,
+    infoBox: false,
+    sceneModePicker: false,
+    selectionIndicator: false,
+    timeline: false,
+    navigationHelpButton: false,
+    navigationInstructionsInitiallyVisible: false,
+    scene3DOnly: true
   })
 
   try {

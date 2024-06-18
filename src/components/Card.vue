@@ -12,16 +12,16 @@
           </DisclosureButton>
         </dt>
         <DisclosurePanel as="dd" class="mt-2 pr-12">
-          <div class="flex items-center justify-between w-full mb-2">
-            <p v-if="lng" class="text-base leading-7 text-gray-300 w-1/2">
+          <div class="lg:flex items-center justify-between w-full mb-2">
+            <p v-if="lng" class="text-base leading-7 text-gray-300 lg:w-1/2">
               lng : {{ lng.toFixed(7) }}
             </p>
             <p v-if="lat" class="text-base leading-7 text-gray-300 my-1.5">
               lat : {{ lat.toFixed(7) }}
             </p>
           </div>
-          <div class="flex items-center justify-between w-full">
-            <p class="text-base leading-7 text-gray-300 w-1/2">alt : {{ alt }} meters</p>
+          <div class="lg:flex items-center justify-between w-full">
+            <p class="text-base text-gray-300 lg:w-1/2">alt : {{ alt }} meters</p>
             <Input @updateAltWaypoint="updateAltWaypoint" />
           </div>
           <div class="flex justify-center mt-8">
